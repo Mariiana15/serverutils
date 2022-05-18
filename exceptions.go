@@ -1,18 +1,18 @@
 package serverutils
 
-const msgDatabase = "error in the database"
-const msgMalFormat = "mal format object response"
-const msgUnauthorized = "unauthorized user"
-const msgNotFound = "car not found in the database"
-const msgDataCorrupt = "data corrupt"
+const MsgDatabase = "error in the database"
+const MsgMalFormat = "mal format object response"
+const MsgUnauthorized = "unauthorized user"
+const MsgNotFound = "car not found in the database"
+const MsgDataCorrupt = "data corrupt"
 
-const stateOK = "successful"
-const stateKO = "error"
-const statePending = "pending"
+const StateOK = "successful"
+const StateKO = "error"
+const StatePending = "pending"
 
 ///
-const msgResponseOk1 = "Operation is complete"
+const MsgResponseOk1 = "Operation is complete"
 
-type responseOk struct {
+type ResponseOk struct {
 	Message string `json:"message"`
 }

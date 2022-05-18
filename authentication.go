@@ -11,7 +11,6 @@ import (
 	"time"
 
 	"github.com/Mariiana15/dbmanager"
-	"github.com/Mariiana15/serverutils"
 	"github.com/dgrijalva/jwt-go"
 	uuid "github.com/satori/go.uuid"
 )
@@ -157,14 +156,14 @@ func TokenValid(r *http.Request) error {
 		errAu := token_.GetToken(true)
 		if errAu != nil {
 			log.Println(errAu)
-			return fmt.Errorf("{\"error\": \"%v\"}", serverutils.MsgUnauthorized)
+			return fmt.Errorf("{\"error\": \"%v\"}", MsgUnauthorized)
 		}
 		stoken := ExtractToken(r)
 		if stoken != token_.Token {
 			log.Println(stoken)
 			log.Println("---")
 			log.Println(token_.Token)
-			return fmt.Errorf("{\"error\": \"%v\"}", serverutils.MsgUnauthorized)
+			return fmt.Errorf("{\"error\": \"%v\"}", MsgUnauthorized)
 		}
 	}
 
@@ -187,10 +186,10 @@ func TokenValidWS(tokenString string) error {
 		errAu := token_.GetToken(true)
 		if errAu != nil {
 			log.Println(errAu)
-			return fmt.Errorf("{\"error\": \"%v\"}", serverutils.MsgUnauthorized)
+			return fmt.Errorf("{\"error\": \"%v\"}", MsgUnauthorized)
 		}
 		if tokenString != token_.Token {
-			return fmt.Errorf("{\"error\": \"%v\"}", serverutils.MsgUnauthorized)
+			return fmt.Errorf("{\"error\": \"%v\"}", MsgUnauthorized)
 		}
 	}
 
@@ -301,10 +300,10 @@ func DeleteAuth(givenUuid string) (int64, error) {
 
 func HandleRefresh(w http.ResponseWriter, r *http.Request) {
 
-	b, err := serverutils.GetBodyResponse(r)
+	b, err := GetBodyResponse(r)
 	if err != nil {
 		w.WriteHeader(http.StatusUnauthorized)
-		fmt.Fprintf(w, "{\"error\": \"%v\"}", serverutils.MsgMalFormat)
+		fmt.Fprintf(w, "{\"error\": \"%v\"}", MsgMalFormat)
 		return
 	}
 	refreshToken := b["refresh_token"]
@@ -384,7 +383,7 @@ func HandleLogOut(w http.ResponseWriter, r *http.Request) {
 	au, err := ExtractTokenMetadata(r)
 	if err != nil {
 		w.WriteHeader(http.StatusUnauthorized)
-		fmt.Fprintf(w, "{\"error\": \"%v\"}", serverutils.MsgUnauthorized)
+		fmt.Fprintf(w, "{\"error\": \"%v\"}", MsgUnauthorized)
 		return
 	}
 
@@ -393,7 +392,7 @@ func HandleLogOut(w http.ResponseWriter, r *http.Request) {
 	deleteErr := token.DeleteToken(true)
 	if deleteErr != nil { //if any goes wrong
 		w.WriteHeader(http.StatusUnauthorized)
-		fmt.Fprintf(w, "{\"error\": \"%v\"}", serverutils.MsgUnauthorized)
+		fmt.Fprintf(w, "{\"error\": \"%v\"}", MsgUnauthorized)
 		return
 	}
 	fmt.Fprintf(w, "{\"message\": \"%v\"}", "Successfully logged out")

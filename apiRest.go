@@ -20,6 +20,7 @@ func GetBodyResponse(req *http.Request) (map[string]interface{}, error) {
 }
 
 func GetBodyResponseRequest(client *http.Client, r *http.Request) (string, error) {
+
 	respuesta, err := client.Do(r)
 	if err != nil {
 		return "Error haciendo petición: ", err
@@ -33,6 +34,7 @@ func GetBodyResponseRequest(client *http.Client, r *http.Request) (string, error
 }
 
 func Contains(a []string, x string) bool {
+
 	for _, n := range a {
 		if x == n {
 			return true
